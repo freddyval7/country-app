@@ -2,7 +2,8 @@ import { Component, inject, resource, signal } from '@angular/core';
 import { SearchInput } from '../../components/search-input/search-input';
 import { CountryList } from '../../components/country-list/country-list';
 import { CountryService } from '../../services/country';
-import { firstValueFrom } from 'rxjs';
+import { of } from 'rxjs';
+import { rxResource } from '@angular/core/rxjs-interop';
 
 @Component({
   selector: 'app-by-country-page',
@@ -13,12 +14,11 @@ export class ByCountryPage {
   countryService = inject(CountryService);
   query = signal('');
 
-  countryResource = resource({
+  countryResource = rxResource({
     params: () => ({ query: this.query() }),
-    loader: async ({ params }) => {
-      if (!params.query) return [];
-
-      return await firstValueFrom(this.countryService.searchByCountry(this.query()));
+    stream: ({ params }) => {
+      if (!params.query) return of([]);
+      return this.countryService.searchByCountry(params.query);
     },
   });
 }
