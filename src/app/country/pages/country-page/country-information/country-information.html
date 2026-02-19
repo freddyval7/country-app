@@ -1,10 +1,13 @@
 <section class="mx-10 flex flex-col gap-10">
   <!-- NAME -->
   <div>
-    <h1 class="text-3xl">{{ country().name }}</h1>
+    <h1 class="text-5xl md:text-6xl font-bold pb-2">
+      {{ country().name }}
+    </h1>
+    <div class="divider"></div>
   </div>
   <!-- DATA -->
-  <div class="stats shadow">
+  <div class="stats shadow bg-base-300">
     <div class="stat">
       <div class="stat-figure text-secondary">
         <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 32 32">
@@ -41,14 +44,16 @@
       <div class="stat-value">{{ country().mainLanguage }}</div>
       <div class="stat-desc flex flex-col gap-2">
         <div class="text-sm">Otros lenguajes:</div>
-        @for (lenguage of country().languages; track lenguage) {
-          <div class="badge badge-primary">{{ lenguage.name }}</div>
-        }
+        <div class="flex gap-1">
+          @for (lenguage of country().languages; track lenguage) {
+            <div class="badge badge-primary cursor-default">{{ lenguage.name }}</div>
+          }
+        </div>
       </div>
     </div>
   </div>
   <!-- FLAG -->
-  <div class="items-center flex justify-center">
+  <div class="items-center flex justify-center pb-5">
     <div class="hover-3d">
       <!-- content -->
       <figure class="max-w-100 rounded-2xl">
